@@ -24,12 +24,13 @@ function log(o) {
   }
 }
 
-var StyleGuide = function () {
+// Accepts in arguments of files
+var StyleGuide = function (files) {
   // Render first page
-  this.render('', config.templates + 'index.tpl', {menu:config.files});
+  this.render('', config.templates + 'index.tpl', {menu:files});
 
-  for ( var fileIndex in config.files) {
-    var myCss = this.getParsedCss(config.source + config.files[fileIndex]),
+  for ( var fileIndex in files) {
+    var myCss = this.getParsedCss(config.source + files[fileIndex]),
       data = this.getData(myCss.stylesheet.rules);
 
     this.render(fileIndex, config.templates + 'page.tpl', {title: config.files[fileIndex], rules: data});
