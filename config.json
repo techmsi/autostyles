@@ -1,5 +1,5 @@
 {
-  "debug": true,
+  "debug": false,
   "source": "./css/",
   "files":["sample.css","sample2.css"],
   "templates": "templates/",

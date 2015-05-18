@@ -9,37 +9,6 @@ var _ = require('lodash'),
   config = require('./config.json'),
   extraFields = ['type', 'position'];
 
-// Read the css file
-function getFile(source) {
-  return fs.readFileSync(source, 'utf8');
-}
-
-// Parse the CSS file
-function getParsedCss(source) {
-  var file = getFile(source);
-  return (file) ? css.parse(file) : '';
-}
-
-// Output rendered file
-function render(index, filename, data) {
-  var res = nunjucks.render(filename, data),
-      file = filename.replace(config.templates, config.output).replace('.tpl', index + '.html');
-
-  // Copy css folder with autostyles module css
-  fs.copySync('./app', config.output + 'css');
-  // Copy css folder containing your project files
-  fs.copySync('./css', config.output + 'css');
-
-  // Write out file to specified folder
-  fs.outputFile(file, res, function (err) {
-    if (err) {
-      return console.log(err);
-    }
-
-    logMsg('Outputted file', filename);
-  });
-
-}
 
 // For easy logging
 function logMsg(msg, value) {
@@ -55,7 +24,58 @@ function log(o) {
   }
 }
 
-function getData(data) {
+var StyleGuide = function () {
+  // Render first page
+  this.render('', config.templates + 'index.tpl', {menu:config.files});
+
+  for ( var fileIndex in config.files) {
+    var myCss = this.getParsedCss(config.source + config.files[fileIndex]),
+      data = this.getData(myCss.stylesheet.rules);
+
+    this.render(fileIndex, config.templates + 'page.tpl', {title: config.files[fileIndex], rules: data});
+  }
+
+};
+
+// Read the css file
+StyleGuide.prototype.getFile = function(source){
+  return fs.readFileSync(source, 'utf8');
+};
+
+StyleGuide.prototype.copyFiles = function(){
+  // Copy css folder with autostyles module css
+  fs.copySync('./app', config.output + 'css');
+
+  // Copy css folder containing your project files
+  fs.copySync(config.source, config.output + 'css');
+};
+
+// Write out file to specified folder
+StyleGuide.prototype.writeFiles = function (filename, content){
+  fs.outputFile(filename, content, function (err) {
+    if (err) {
+      return console.log(err);
+    }
+  });
+};
+
+// Parse the CSS file
+StyleGuide.prototype.getParsedCss = function (source) {
+  var file = this.getFile(source);
+  return (file) ? css.parse(file) : '';
+};
+
+// Output rendered file
+StyleGuide.prototype.render = function (index, filename, data) {
+  var res = nunjucks.render(filename, data),
+      file = filename.replace(config.templates, config.output).replace('.tpl', index + '.html');
+
+  this.copyFiles();
+  this.writeFiles(file, res);
+}
+
+
+StyleGuide.prototype.getData = function (data) {
   var styles = _.chain(data)
   .map(function (item) {
     return _.omit(item, extraFields);
@@ -88,20 +108,6 @@ function addInfo(items) {
 
   });
 
-
 }
 
-function createGuide() {
-  // Render first page
-  render('', config.templates + 'index.tpl', {menu:config.files});
-
-  for ( var fileIndex in config.files) {
-    var myCss = getParsedCss(config.source + config.files[fileIndex]),
-      data = getData(myCss.stylesheet.rules);
-
-    render(fileIndex, config.templates + 'page.tpl', {title: config.files[fileIndex], rules: data});
-  }
-  return true;
-}
-
-module.exports = createGuide;
+module.exports = StyleGuide;
