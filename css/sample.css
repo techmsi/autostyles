@@ -1,0 +1,25 @@
+body{
+  font-family: Helvetica,Arial,sans-serif;
+}
+
+a {
+  color: #12B665;
+}
+
+button {
+  background: none;
+  border: none;
+  background-color: #ffc;
+  color: #000;
+  padding: 0.25rem 0.5rem;
+}
+
+button.on {
+  background-color: #00bbff;
+  color: #222;
+}
+
+button.off {
+  background-color: #ccc;
+  color: #555;
+}

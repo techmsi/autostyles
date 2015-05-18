@@ -1,0 +1,94 @@
+html{
+  font-size: 62.5%;
+}
+
+/* Specific styles for autostyles module */
+.autostyles-h1,
+.autostyles-block,
+.autostyles-button,
+.autostyles-code,
+.autostyles-code > code,
+.autostyles-block-title {
+  color: #111;
+  font-family: 'Open Sans', Arial, sans-serif;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.autostyles-code,
+.autostyles-code code,
+.autostyles-tag,
+.autostyles-attr {
+  display: inline-block;
+  vertical-align: top;
+}
+
+/* Nav Buttons */
+.autostyles-button{
+  background-color: #ddd;
+  border-radius: 0.25rem;
+  display: block;
+  margin: 1.5rem 0;
+  padding: .35rem 1.4rem;
+  text-decoration: none;
+  text-align: center;
+  width: 10rem;
+}
+.autostyles-button:hover{
+  background-color: #2787d8;
+}
+
+/* Page Heading */
+.autostyles-h1 {
+  font-size: 1.8rem;
+}
+
+/* Block Heading */
+.autostyles-block-title {
+  font-size: 1.2rem;
+  background-color: #111;
+  color: #fff;
+  margin: 0;
+  padding: 1.2rem;
+  cursor: pointer;
+}
+
+.autostyles-block-title > span {
+  background-color: #333;
+  border-radius: 0.25rem;
+  font-weight: normal;
+  float: right;
+  padding: .35rem 1.4rem;
+}
+
+/* Block w/ tag & code */
+.autostyles-block{
+  display: block;
+  background-color: #f4f4f4;
+  border: 1px solid #ddd;
+  padding: 1.2rem;
+  max-height: 1000px;
+  height:100%;
+  transition: max-height .5s ease-in-out;
+}
+/* Block style when Closed  */
+.autostyles-block.closed {
+  max-height: 0;
+  padding: 0 1.2rem;
+  overflow-y:  hidden;
+}
+/* Code Block */
+.autostyles-code {
+  line-height: .8rem;
+}
+/* Tag Block */
+.autostyles-tag {
+  width: 15rem;
+}
+/* Line as attr: val */
+.autostyles-attr {
+  width: 15rem;
+}
+.autostyles-val {
+  color: #2787d8;
+}
