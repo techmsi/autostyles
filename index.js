@@ -43,18 +43,22 @@ StyleGuide.prototype.setFiles = function () {
   var fileIndex,
       myCss,
       data,
+      link,
+      menu = [],
       files = walk.match(this.source, /(\.css)$/gi) || [];
 
-  // Render first page
-  this.render('', path.join(this.templates, 'index.tpl'), {menu:files});
 
   for (fileIndex in files) {
+    link = files[fileIndex].replace(this.source + '/', '');
     myCss = this.getParsedCss(files[fileIndex]);
     data = this.getData(myCss.stylesheet.rules);
+    menu.push(link);
 
-    this.render(fileIndex, path.join(this.templates, 'page.tpl'), {title: files[fileIndex], rules: data});
+    this.render(fileIndex, path.join(this.templates, 'page.tpl'), {title: link, rules: data});
   }
 
+  // Render first page
+  this.render('', path.join(this.templates, 'index.tpl'), {menu: menu});
 };
 
 // Read the css file
