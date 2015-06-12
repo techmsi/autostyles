@@ -1,61 +1,83 @@
 'use strict';
 
 var _ = require('lodash'),
+  path = require('path'),
   fs = require('fs-extra'),
+  walk = require('simple-walk'),
   css = require('css'),
   formattor = require('formattor'),
   nunjucks = require('nunjucks'),
   env = new nunjucks.Environment(),
-  config = require('./config.json'),
+  debug = false,
   extraFields = ['type', 'position'];
 
 
 // For easy logging
 function logMsg(msg, value) {
-  if (config.debug) {
+  if (debug) {
     console.log('%s\n%j\n', msg, value);
   }
 }
 
 function log(o) {
-  if (config.debug) {
+  if (debug) {
     // console.log(formattor(o, {method: 'json'}));
     console.log('%j\n', o);
   }
 }
 
 // Accepts in arguments of files
-var StyleGuide = function (files) {
+var StyleGuide = function (config) {
+  this.templates  = 'templates';
+  this.source = config.source;
+  this.output = config.output;
+  debug = config.debug;
+
+  console.log(config);
+
+  this.setFiles();
+};
+// Set files
+StyleGuide.prototype.setFiles = function () {
+
+  var fileIndex,
+      myCss,
+      data,
+      files = walk.match(this.source, /(\.css)$/gi) || [];
+
   // Render first page
-  this.render('', config.templates + 'index.tpl', {menu:files});
+  this.render('', path.join(this.templates, 'index.tpl'), {menu:files});
 
-  for ( var fileIndex in files) {
-    var myCss = this.getParsedCss(config.source + files[fileIndex]),
-      data = this.getData(myCss.stylesheet.rules);
+  for (fileIndex in files) {
+    myCss = this.getParsedCss(files[fileIndex]);
+    data = this.getData(myCss.stylesheet.rules);
 
-    this.render(fileIndex, config.templates + 'page.tpl', {title: config.files[fileIndex], rules: data});
+    this.render(fileIndex, path.join(this.templates, 'page.tpl'), {title: files[fileIndex], rules: data});
   }
 
 };
 
 // Read the css file
-StyleGuide.prototype.getFile = function(source){
+StyleGuide.prototype.getFile = function (source) {
   return fs.readFileSync(source, 'utf8');
 };
 
-StyleGuide.prototype.copyFiles = function(){
+StyleGuide.prototype.copyFiles = function () {
   // Copy css folder with autostyles module css
-  fs.copySync('./app', config.output + 'css');
+  fs.copySync('./app', path.join(this.output, 'css'));
 
-  // Copy css folder containing your project files
-  fs.copySync(config.source, config.output + 'css');
+  // Copy css folder containing the project files
+  fs.copySync(this.source, path.join(this.output, 'css'));
 };
 
 // Write out file to specified folder
 StyleGuide.prototype.writeFiles = function (filename, content){
   fs.outputFile(filename, content, function (err) {
     if (err) {
-      return console.log(err);
+      console.log(chalk.red('Error: ' + err));
+      process.exit(1);
+    } else {
+      process.exit(0);
     }
   });
 };
@@ -69,11 +91,11 @@ StyleGuide.prototype.getParsedCss = function (source) {
 // Output rendered file
 StyleGuide.prototype.render = function (index, filename, data) {
   var res = nunjucks.render(filename, data),
-      file = filename.replace(config.templates, config.output).replace('.tpl', index + '.html');
+      file = filename.replace(this.templates, this.output).replace('.tpl', index + '.html');
 
-  this.copyFiles();
+  this.copyFiles(this.source, this.output);
   this.writeFiles(file, res);
-}
+};
 
 
 StyleGuide.prototype.getData = function (data) {
@@ -86,7 +108,7 @@ StyleGuide.prototype.getData = function (data) {
   .value();
 
   return styles;
-}
+};
 
 function addInfo(items) {
   return _.map(items, function (item) {
