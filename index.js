@@ -33,8 +33,6 @@ var StyleGuide = function (config) {
   this.output = config.output;
   debug = config.debug;
 
-  console.log(config);
-
   this.setFiles();
 };
 // Set files
@@ -75,10 +73,10 @@ StyleGuide.prototype.copyFiles = function () {
 };
 
 // Write out file to specified folder
-StyleGuide.prototype.writeFiles = function (filename, content){
+StyleGuide.prototype.writeFiles = function (filename, content) {
   fs.outputFile(filename, content, function (err) {
     if (err) {
-      console.log(chalk.red('Error: ' + err));
+      console.log('Error: ', err);
       process.exit(1);
     } else {
       process.exit(0);
