@@ -1,7 +1,5 @@
 {
   "debug": false,
   "source": "./css/",
-  "files":["sample.css","sample2.css"],
-  "templates": "templates/",
   "output": "dist/"
 }
