@@ -13,6 +13,12 @@ npm install autostyles -g
 ```
 
 ## Usage
+### Command Line (No options)
+```bash
+buildguide myfolder
+```
+You will be prompted for the source & desitnation folders. This information will be used to generate your style guide.
+
 ### Command Line (Short)
 ```bash
 buildguide styles -s "./css" -o "dist" -l

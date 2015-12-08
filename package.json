@@ -3,14 +3,13 @@
   "version": "0.0.0",
   "description": "Transforms css into automatic style guides.",
   "license": "MIT",
-  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "https://techmsi@github.com/techmsi/autostyles.git"
   },
   "author": "techmsi",
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=0.12"
   },
   "scripts": {
     "test": "make test",
@@ -18,15 +17,17 @@
   },
   "preferGlobal": "true",
   "bin": {
-    "buildguide": "lib/buildguide.js"
+    "buildguide": "lib/index.js"
   },
   "keywords": [
     "css",
     "styleguide"
   ],
   "dependencies": {
-    "commander": "^2.8.1",
     "chalk": "^1.0.0",
+    "co": "^4.6.0",
+    "co-prompt": "^1.0.0",
+    "commander": "^2.9.0",
     "css": "^2.2.0",
     "css-parse": "^2.0.0",
     "formattor": "0.0.2",
@@ -41,6 +42,7 @@
     "chai": "^2.3.0",
     "codeclimate-test-reporter": "0.0.4",
     "coveralls": "^2.10.0",
+    "eslint": "^1.10.3",
     "gitdown": "^1.3.0",
     "gulp": "^3.8.11",
     "gulp-watch": "^4.2.2",
