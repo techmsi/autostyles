@@ -152,11 +152,19 @@ StyleGuide.prototype.writeFiles = function (filename, content) {
 
 // Output rendered file
 StyleGuide.prototype.render = function (index, filename, data) {
-  var res = nunjucks.render(filename, data),
-    file = filename.replace(this.templates, this.output).replace('.tpl', index + '.html');
+  var self = this,
+    file;
 
-  this.copyFiles(this.source, this.output);
-  this.writeFiles(file, res);
+  nunjucks.render(filename, data, function (err, res) {
+    if (err) {
+      console.error(chalk.bold.underline.red(filename), err.stack);
+      process.exit(1);
+    } else {
+      file = filename.replace(self.templates, self.output).replace('.tpl', index + '.html');
+      self.copyFiles(self.source, self.output);
+      self.writeFiles(file, res);
+    }
+  });
 
   logMsg('6) Output the rendered file ', filename);
 };
