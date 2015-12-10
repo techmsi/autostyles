@@ -2,6 +2,7 @@
 
 var _ = require('lodash'),
   path = require('path'),
+  root = require('root-path'),
   fs = require('fs-extra'),
   chalk = require('chalk'),
   walk = require('simple-walk'),
@@ -155,9 +156,9 @@ StyleGuide.prototype.render = function (index, filename, data) {
   var self = this,
     file;
 
-  nunjucks.render(filename, data, function (err, res) {
+  nunjucks.render(root(filename), data, function (err, res) {
     if (err) {
-      console.error(chalk.bold.underline.red(filename), err.stack);
+      console.error(chalk.bold.underline.red(filename), 'in ' + chalk.yellow(process.cwd()), '\n' + err.stack);
       process.exit(1);
     } else {
       file = filename.replace(self.templates, self.output).replace('.tpl', index + '.html');
