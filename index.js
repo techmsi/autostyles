@@ -43,6 +43,7 @@ StyleGuide = function (config) {
   this.output = config.output;
   debug = config.debug;
 
+  this.setTempTemplates();
   this.setFiles();
 };
 
@@ -99,6 +100,10 @@ StyleGuide.prototype.getData = function (data) {
   return styles;
 };
 
+StyleGuide.prototype.setTempTemplates = function () {
+  fs.copySync(path.resolve(__dirname, this.templates), path.join(process.cwd(), '_' + this.templates));
+}
+
 // Set files
 StyleGuide.prototype.setFiles = function () {
 
@@ -130,7 +135,7 @@ StyleGuide.prototype.setFiles = function () {
 // Copies module & project css
 StyleGuide.prototype.copyFiles = function () {
   // Copy css folder with autostyles module css
-  fs.copySync(path.resolve('.','app'), path.join(this.output, 'css'));
+  fs.copySync(path.resolve(__dirname, 'app'), path.join(this.output, 'css'));
   // Copy css folder containing the project files
   fs.copySync(this.source, path.join(this.output, 'css'));
 
@@ -156,9 +161,9 @@ StyleGuide.prototype.render = function (index, filename, data) {
   var self = this,
     file;
 
-  nunjucks.render(root(filename), data, function (err, res) {
+  nunjucks.render('_' + filename, data, function (err, res) {
     if (err) {
-      console.error(chalk.bold.underline.red(filename), 'in ' + chalk.yellow(process.cwd()), '\n' + err.stack);
+      console.error(chalk.bold.underline.red(filename), 'in ' + chalk.yellow('_' + filename), '\n' + err.stack);
       process.exit(1);
     } else {
       file = filename.replace(self.templates, self.output).replace('.tpl', index + '.html');
@@ -169,5 +174,16 @@ StyleGuide.prototype.render = function (index, filename, data) {
 
   logMsg('6) Output the rendered file ', filename);
 };
+
+function removeTempTemplates() {
+  fs.removeSync(path.join(process.cwd(), '_templates'));
+};
+
+// Remove the temp templates folder
+process.on('exit', function() {
+  console.log(chalk.bold.green('Your guide was successfully created.'));
+  removeTempTemplates();
+});
+
 
 module.exports = StyleGuide;
