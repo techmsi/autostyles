@@ -1,13 +1,29 @@
 # autostyles
 NPM module for transforming css into automatic style guides.
 
-##Install
+## Install(Privately)
 
 ```bash
 npm install --save-dev autostyles
 ```
+### Run(Privately)
+ * add these lines to your `package.json`
+```json
+"localModulesPath": "./node_modules/.bin",
+"scripts": {
+    "styleguide-prompt": "$npm_package_localModulesPath/buildguide myfolder --log true",
+    "styleguide": "$npm_package_localModulesPath/buildguide styles --source ./css --output dist --log true"
+}
+```
+THEN
+
+```bash
+npm run styleguide
+```
+
 OR
 
+## Install(Globally)
 ```bash
 npm install autostyles -g
 ```
@@ -21,11 +37,11 @@ You will be prompted for the source & desitnation folders. This information will
 
 ### Command Line (Short)
 ```bash
-buildguide styles -s "./css" -o "dist" -l
+buildguide styles -s ./css -o dist -l true
 ```
 ### Command Line (Long)
 ```bash
-buildguide styles --source "./css" --output "dist" --log
+buildguide styles --source ./css --output dist --log true
 ```
 
 #### Help
