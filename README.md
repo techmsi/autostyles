@@ -1,29 +1,28 @@
 # autostyles
 NPM module for transforming css into automatic style guides.
 
-## Install(Privately)
+## Install (Privately)
 
 ```bash
 npm install --save-dev autostyles
 ```
-### Run(Privately)
+### Run (Privately)
  * add these lines to your `package.json`
 ```json
 "localModulesPath": "./node_modules/.bin",
 "scripts": {
-    "styleguide-prompt": "$npm_package_localModulesPath/buildguide myfolder --log true",
-    "styleguide": "$npm_package_localModulesPath/buildguide styles --source ./css --output dist --log true"
+    "styleguide": "$npm_package_localModulesPath/buildguide",
 }
 ```
 THEN
 
 ```bash
-npm run styleguide
+npm run styleguide --source ./css --output dist --log styles myfolder
 ```
 
 OR
 
-## Install(Globally)
+## Install (Globally)
 ```bash
 npm install autostyles -g
 ```
@@ -37,11 +36,11 @@ You will be prompted for the source & desitnation folders. This information will
 
 ### Command Line (Short)
 ```bash
-buildguide styles -s ./css -o dist -l true
+buildguide -s ./css -o dist -l styles myfolder
 ```
 ### Command Line (Long)
 ```bash
-buildguide styles --source ./css --output dist --log true
+buildguide --source ./css --output dist --log styles myfolder
 ```
 
 #### Help
@@ -51,16 +50,17 @@ buildguide styles -h
 
 #### Options
 ```bash
+Usage: buildguide [options] [command] <dir>
 
-  Usage: styles [options]
+  Commands:
+    styles      Create style guide.
+    help [cmd]  display help for [cmd]
 
   Options:
-
     -h, --help            output usage information
-    -l --log [debug]      Turns debug on
-    -s --source [source]  Source folder containing css files
-    -o --output [output]  Destination folder final guide files
-
+    -l --log              Turns debug on
+    -s --source <source>  Source folder containing css files
+    -o --output <output>  Destination folder final guide files
 ```
 # Examples
 The css files located inside the `/css` folder
