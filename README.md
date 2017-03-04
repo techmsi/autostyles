@@ -1,23 +1,27 @@
 # autostyles
 NPM module for transforming css into automatic style guides.
 
+[![js-semistandard-style](https://cdn.rawgit.com/flet/semistandard/master/badge.svg)](https://github.com/Flet/semistandard)
+
 ## Install (Privately)
 
 ```bash
 npm install --save-dev autostyles
 ```
 ### Run (Privately)
- * add these lines to your `package.json`
+ * add these lines to your package.json
+
 ```json
 "localModulesPath": "./node_modules/.bin",
 "scripts": {
-    "styleguide": "$npm_package_localModulesPath/buildguide",
+  "styleguide": "$npm_package_localModulesPath/buildguide",
 }
 ```
+
 THEN
 
 ```bash
-npm run styleguide --source ./css --output dist --log styles myfolder
+npm run styleguide --log myfolder --source ./css --output dist
 ```
 
 OR
@@ -62,6 +66,7 @@ Usage: buildguide [options] [command] <dir>
     -s --source <source>  Source folder containing css files
     -o --output <output>  Destination folder final guide files
 ```
+
 # Examples
 The css files located inside the `/css` folder
 
@@ -72,6 +77,7 @@ The css files located inside the `/css` folder
 ```
 
 are transformed into
+
 ```
 /dist
   |-- index.html

@@ -1,8 +1,15 @@
-html{
-  font-size: 62.5%;
+html {
+  font-size: 100%;
 }
 
 /* Specific styles for autostyles module */
+.autostyles-body,
+.autostyles-body code {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 .autostyles-h1,
 .autostyles-block,
 .autostyles-button,
@@ -11,8 +18,7 @@ html{
 .autostyles-block-title {
   color: #111;
   font-family: 'Open Sans', Arial, sans-serif;
-  font-size: 1.2rem;
-  font-weight: bold;
+  font-size: .85rem;
 }
 
 .autostyles-code,
@@ -26,26 +32,33 @@ html{
 /* Nav Buttons */
 .autostyles-button{
   background-color: #ddd;
-  border-radius: 0.25rem;
-  display: block;
-  margin: 1.5rem 0;
-  padding: .35rem 1.4rem;
+  border-radius: 0.15rem;
+  display: inline-block;
+  font-weight: bold;
+  padding: 0.15rem 2rem;
   text-decoration: none;
   text-align: center;
-  width: 10rem;
+  margin: 1rem;
 }
-.autostyles-button:hover{
+/* Back button */
+.autostyles-button.back{
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.autostyles-button:hover {
   background-color: #2787d8;
 }
 
 /* Page Heading */
 .autostyles-h1 {
-  font-size: 1.8rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0 1rem;
 }
 
 /* Block Heading */
 .autostyles-block-title {
-  font-size: 1.2rem;
   background-color: #111;
   color: #fff;
   margin: 0;
@@ -56,9 +69,7 @@ html{
 .autostyles-block-title > span {
   background-color: #333;
   border-radius: 0.25rem;
-  font-weight: normal;
-  float: right;
-  padding: .35rem 1.4rem;
+  padding: 0 1.4rem;
 }
 
 /* Block w/ tag & code */
@@ -66,9 +77,9 @@ html{
   display: block;
   background-color: #f4f4f4;
   border: 1px solid #ddd;
-  padding: 1.2rem;
-  max-height: 1000px;
   height:100%;
+  max-height: 1000px;
+  margin: 1rem;
   transition: max-height .5s ease-in-out;
 }
 /* Block style when Closed  */
@@ -79,7 +90,7 @@ html{
 }
 /* Code Block */
 .autostyles-code {
-  line-height: .8rem;
+  white-space: normal;
 }
 /* Tag Block */
 .autostyles-tag {
@@ -88,6 +99,7 @@ html{
 /* Line as attr: val */
 .autostyles-attr {
   width: 15rem;
+  font-weight: bold;
 }
 .autostyles-val {
   color: #2787d8;
