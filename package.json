@@ -28,7 +28,6 @@
     "styleguide"
   ],
   "dependencies": {
-    "chalk": "^3.x",
     "css": "^2.x",
     "css-parse": "^2.x",
     "fs-extra": "^8.x",

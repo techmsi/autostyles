@@ -1,6 +1,6 @@
 'use strict';
 
-const { blue } = require('chalk').bold;
+const { bold } = require('kleur');
 const path = require('path');
 const defaultConfig = require('./config.json');
 const sampleCss = '../example/my-css/blocks.css';
@@ -64,7 +64,7 @@ describe('#CreateGuide', function() {
     expect(firstRule).toHaveProperty('blockLevel');
   });
 
-  it(`Parses css file: ${blue(sampleCss)} to object`, function() {
+  it(`Parses css file: ${bold().blue(sampleCss)} to object`, function() {
     guide = new CreateGuide(defaultConfig);
     const absoluteFilePath = path.resolve(__dirname, sampleCss);
     const parsedCss = guide.getParsedCss(absoluteFilePath);
