@@ -1,63 +1,74 @@
 'use strict';
 
-const chalk = require('chalk');
-const mocha = require('mocha');
-const chai = require('chai');
-chai.use(require('chai-fs'));
-
-const describe = mocha.describe;
-const it = mocha.it;
-const expect = chai.expect;
-const assert = chai.assert;
-const { bold: { blue, red } } = chalk;
+const { blue } = require('chalk').bold;
 const path = require('path');
-const config = require('./config.json');
+const defaultConfig = require('./config.json');
 const sampleCss = '../example/my-css/blocks.css';
-const autostyles = require('../index');
+const chai = require('chai');
+const chaiFs = require('chai-fs');
+chai.use(chaiFs);
+
+const StyleGuide = require('../src/StyleGuide');
 const CreateGuide = require('../src/CreateGuide');
-let guide = {};
+const CreatePage = require('../src/CreatePage');
 
-describe('#CreateGuide', function () {
-  before(function() {
-    guide = new CreateGuide(config);
-  })
+let guide = null;
+let createdPages = null;
 
-  it('Test(CreateGuide) - create new guide object', function (done) {
-    expect(guide).to.be.ok;
-    assert.typeOf(guide, 'object', 'Guide is an object.');
+describe('#StyleGuide', function() {
+  it('Sets the config for new StyleGuide', function() {
+    guide = new StyleGuide(defaultConfig);
 
-    done();
+    expect(guide).toBeDefined();
+    expect(guide).toHaveProperty('config');
+  });
+  it('Creates new StyleGuide object', function() {
+    guide = new StyleGuide(defaultConfig);
+    const createdGuide = guide.create();
+
+    expect(typeof createdGuide).toBe('object');
   });
 
-  it(`Test - ${config.output} directory`, function (done) {
-    const folderPath = config.output;
+  it('Renders a guide', function() {
+    guide = new StyleGuide(defaultConfig);
+    const createdGuide = guide.create();
+    guide.render();
 
-    assert.pathExists(folderPath);
-    assert.extname('dist/index.html', '.html');
-    assert.isDirectory(folderPath);
-    assert.notIsEmptyDirectory(folderPath);
-
-    done();
+    chai.assert.pathExists(defaultConfig.output);
+    chai.assert.isDirectory(defaultConfig.output);
+    chai.assert.notIsEmptyDirectory(defaultConfig.output);
   });
-
 });
 
-describe('#StyleGuide', function () {
-  it('Test(StyleGuides) - create new guide object', function (done) {
-    const styles = new autostyles(config);
-    const guide = styles.create();
-
-    expect(styles).to.be.ok;
-    done();
+describe('#CreateGuide', function() {
+  beforeEach(() => {
+    guide = new CreateGuide(defaultConfig);
+    createdPages = guide.getPages();
   });
 
-  it(`Test - converts css file: ${blue(sampleCss)} to object`, function (done) {
-    console.log(`StyleGuides - parsed`);
-    const styles = new autostyles(config);
-    const guide = styles.create();
+  it(`Gets pages & menu`, function() {
+    expect(createdPages).toHaveProperty('pages');
+    expect(createdPages).toHaveProperty('menu');
+  });
 
-    // const css = guide.getParsedCss(sampleCss);
-    // assert.typeOf(css, 'object', 'Parsed Css is an object.');
-    done();
+  it(`Page is an instance of CreatePage`, function() {
+    const [firstPage] = createdPages.pages;
+
+    expect(firstPage).toBeInstanceOf(CreatePage);
+    expect(firstPage).toHaveProperty('rules');
+  });
+
+  it(`Rule contains 'blockLevel' property`, function() {
+    const [firstRule] = createdPages.pages[0].rules;
+
+    expect(firstRule).toHaveProperty('blockLevel');
+  });
+
+  it(`Parses css file: ${blue(sampleCss)} to object`, function() {
+    guide = new CreateGuide(defaultConfig);
+    const absoluteFilePath = path.resolve(__dirname, sampleCss);
+    const parsedCss = guide.getParsedCss(absoluteFilePath);
+
+    expect(parsedCss).toHaveProperty('stylesheet');
   });
 });

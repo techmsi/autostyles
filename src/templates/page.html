@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  {{> header}}
+  <link rel="stylesheet" href="css/{{title}}">
+</head>
+
+<body class="autostyles-body">
+  <h1 class="autostyles-h1">Automatic Style Guide / {{title}}</h1>
+
+  <a href="index.html" class="autostyles-button back">Back</a>
+  
+  {{#rules}}
+  <h2 class="autostyles-block-title">
+    {{selector}}
+    {{#state}}<span>{{state}}</span>{{/state}}
+  </h2>
+
+  <div class="autostyles-block{{#closed }} closed {{/closed}}">
+
+    <div class="autostyles-tag">
+      <{{selector}} {{#state }} class="{{state}}" {{/state}}>
+        {{#blockLevel }}
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo debitis ipsum qui nesciunt sapiente explicabo
+        quod laboriosam sed maxime voluptas at amet ducimus eligendi, et labore dolore, nihil natus expedita.
+        {{/blockLevel}}
+
+        {{^blockLevel}}
+        Lorem ipsum
+        {{/blockLevel}}
+      </{{selector}}>
+    </div> <!-- /.autostyles-tag -->
+
+    <pre class="autostyles-code">
+      <code>
+        {{#declarations}}
+          <span class="autostyles-attr">{{property}}:</span>
+          <span class="autostyles-val">{{value}}</span>;
+          <br>
+        {{/declarations}}
+      </code>
+    </pre>
+
+  </div> <!-- /.autostyles-block -->
+  {{/rules}}
+
+  {{> scripts}}
+</body>
+
+</html>

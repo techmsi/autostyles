@@ -9,13 +9,16 @@
   },
   "author": "techmsi",
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=8.0.0"
   },
   "scripts": {
-    "test": "make test",
+    "pretest:ci": "echo 'PRETEST' && greenkeeper-lockfile-update",
+    "posttest:ci": "echo 'POSTTEST' && greenkeeper-lockfile-upload",
+    "cz": "git-cz",
     "lint": "semistandard --verbose | snazzy || echo 'Please fix the linting errors.'",
-    "update": "ncu -a; ncu -u",
-    "patch-release": "npm version patch && npm publish && git push --follow-tags"
+    "test": "jest --coverage",
+    "test:ci": "jest --coverage --ci --runInBand",
+    "coverage": "cat ./coverage/lcov.info | coveralls"
   },
   "bin": {
     "buildguide": "lib/index.js"
@@ -25,31 +28,50 @@
     "styleguide"
   ],
   "dependencies": {
-    "chai": "^3.5.0",
-    "chalk": "^1.1.3",
-    "co": "^4.6.0",
-    "co-prompt": "^1.0.0",
-    "commander": "^2.9.0",
-    "css": "^2.2.1",
-    "css-parse": "^2.0.0",
-    "fs-extra": "^2.0.0",
-    "handlebars": "^4.0.6",
-    "opn": "^4.0.2",
+    "chalk": "^3.x",
+    "css": "^2.x",
+    "css-parse": "^2.x",
+    "fs-extra": "^8.x",
+    "mustache": "^4.x",
+    "opn": "^6.0.0",
+    "prompts": "^2.3.0",
     "root-path": "^0.2.0",
-    "simple-walk": "^0.1.3",
-    "util": "^0.10.3"
+    "simple-walk": "^0.1.3"
   },
   "devDependencies": {
-    "babel": "^6.23.0",
-    "chai": "^3.5.0",
-    "chai-fs": "^1.0.0",
-    "codeclimate-test-reporter": "0.4.1",
-    "coveralls": "^2.12.0",
-    "istanbul": "^0.4.5",
-    "mocha": "*",
-    "mocha-lcov-reporter": "1.3.0",
-    "npm-check-updates": "^2.10.3",
-    "semistandard": "^10.0.0",
-    "snazzy": "^6.0.0"
+    "chai": "*",
+    "chai-fs": "*",
+    "commitizen": "*",
+    "coveralls": "*",
+    "cz-conventional-changelog": "*",
+    "greenkeeper-lockfile": "^1.x",
+    "jest": "*",
+    "jest-junit": "*",
+    "semistandard": "*",
+    "snazzy": "*"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "modulePaths": [
+      "src",
+      "/node_modules/"
+    ],
+    "reporters": [
+      "default",
+      [
+        "jest-junit",
+        {
+          "outputDirectory": "coverage/junit"
+        }
+      ]
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

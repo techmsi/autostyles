@@ -1,5 +1,5 @@
 {
   "debug": false,
-  "source": "./example/my-css/",
-  "output": "dist/"
+  "source": "./example/my-css",
+  "output": "dist"
 }

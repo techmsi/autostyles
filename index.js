@@ -1,13 +1,11 @@
 /* Autostyles - Main Module */
-const CreateGuide = require('./src/CreateGuide');
+const prompt = require('./src/prompt');
+const StyleGuide = require('./src/StyleGuide');
 
-class StyleGuide {
-  constructor (config) {
-    this.config = config;
-  }
-  create() {
-    const Guide = new CreateGuide(this.config);
-    return Guide;
-  }
-}
-module.exports = StyleGuide;
+module.exports = async () => {
+  const config = await prompt();
+  const Guide = new StyleGuide(config);
+
+  Guide.create();
+  Guide.render();
+};
