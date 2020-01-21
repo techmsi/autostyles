@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    {{> header}} {{#menu}}
+    <link rel="stylesheet" href="css/{{title}}" />
+    {{/menu}}
+  </head>
+
+  <body>
+    <h1 class="autostyles-h1">Automatic Style Guide</h1>
+
+    <nav>
+      {{#menu}}
+      <a href="page{{pageIndex}}.html" class="autostyles-button">{{title}}</a
+      >{{/menu}}
+    </nav>
+
+    {{> scripts}}
+  </body>
+</html>
