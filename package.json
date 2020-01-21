@@ -12,6 +12,8 @@
     "node": ">=8.0.0"
   },
   "scripts": {
+    "pretest:ci": "echo 'PRETEST' && greenkeeper-lockfile-update",
+    "posttest:ci": "echo 'POSTTEST' && greenkeeper-lockfile-upload",
     "cz": "git-cz",
     "lint": "semistandard --verbose | snazzy || echo 'Please fix the linting errors.'",
     "test": "jest --coverage",
@@ -26,13 +28,12 @@
     "styleguide"
   ],
   "dependencies": {
-    "chalk": "^1.1.3",
-    "css": "^2.2.1",
-    "css-parse": "^2.0.0",
-    "fs-extra": "^2.0.0",
-    "handlebars": "^4.0.6",
-    "mustache": "^4.0.0",
-    "opn": "^4.0.2",
+    "chalk": "^3.x",
+    "css": "^2.x",
+    "css-parse": "^2.x",
+    "fs-extra": "^8.x",
+    "mustache": "^4.x",
+    "opn": "^6.0.0",
     "prompts": "^2.3.0",
     "root-path": "^0.2.0",
     "simple-walk": "^0.1.3"
@@ -40,7 +41,6 @@
   "devDependencies": {
     "chai": "*",
     "chai-fs": "*",
-    "codeclimate-test-reporter": "^0.5.1",
     "commitizen": "*",
     "coveralls": "*",
     "cz-conventional-changelog": "*",
