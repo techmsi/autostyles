@@ -1,5 +1,5 @@
 const debug = false;
-const bold = require('chalk').bold;
+const bold = require('kleur').bold();
 
 const log = debug ? console.log.bind(console) : () => {};
 

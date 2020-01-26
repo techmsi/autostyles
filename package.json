@@ -29,7 +29,7 @@
   ],
   "dependencies": {
     "fs-extra": "^8.x",
-    "inquirer": "^7.0.4",
+    "prompts": "*",
     "mensch": "*",
     "mustache": "^4.x",
     "opn": "^6.0.0",

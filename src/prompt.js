@@ -1,22 +1,22 @@
-const { prompt } = require('inquirer');
+const prompt = require('prompts');
 
 const getConfigMenu = [
   {
     type: 'confirm',
     name: 'debug',
-    default: true,
+    initial: true,
     message: 'Turn debug on to get log info?'
   },
   {
     type: 'text',
     name: 'source',
-    default: './my-css',
+    initial: './my-css',
     message: 'Source folder'
   },
   {
     type: 'text',
     name: 'output',
-    default: 'dist',
+    initial: 'dist',
     message: 'Destination folder'
   }
 ];
