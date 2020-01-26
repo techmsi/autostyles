@@ -29,10 +29,10 @@
   ],
   "dependencies": {
     "fs-extra": "^8.x",
+    "inquirer": "^7.0.4",
     "mensch": "*",
     "mustache": "^4.x",
     "opn": "^6.0.0",
-    "prompts": "^2.3.0",
     "root-path": "^0.2.0",
     "simple-walk": "^0.1.3"
   },
