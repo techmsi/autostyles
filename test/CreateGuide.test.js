@@ -1,6 +1,6 @@
 'use strict';
 
-const { bold } = require('kleur');
+const { bold } = require('../src/helpers');
 const path = require('path');
 const defaultConfig = require('./config.json');
 const sampleCss = '../example/my-css/blocks.css';
@@ -31,7 +31,7 @@ describe('#CreateGuide Pages', function() {
     expect(firstPage).toHaveProperty('rules');
   });
 
-  it(`Parses css file: ${bold().blue(sampleCss)} to object`, function() {
+  it(`Parses css file: ${bold.blue(sampleCss)} to object`, function() {
     guide = new CreateGuide(defaultConfig);
     const parsedCss = guide.getParsedCss(fullSampleCSSFilePath);
 
@@ -51,14 +51,14 @@ describe('#CreateGuide Rules', function() {
     expect(firstRule).toHaveProperty('declarations');
   });
 
-  it(`Declaration contains ${bold().yellow('property')} property`, function() {
+  it(`Declaration contains ${bold.yellow('property')} property`, function() {
     const [firstDeclaration] = firstRule.declarations;
 
     expect(firstDeclaration.property).toBeDefined();
     expect(firstDeclaration).toHaveProperty('property');
   });
 
-  it(`Declaration contains ${bold().yellow('value')} property`, function() {
+  it(`Declaration contains ${bold.yellow('value')} property`, function() {
     const [firstDeclaration] = firstRule.declarations;
 
     expect(firstDeclaration.value).toBeDefined();
