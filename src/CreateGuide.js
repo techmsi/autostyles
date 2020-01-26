@@ -1,7 +1,7 @@
 /* Autostyles - Main Module */
 const path = require('path');
 const fs = require('fs-extra');
-const css = require('css');
+const css = require('mensch');
 const walk = require('simple-walk');
 
 const CreatePage = require('./CreatePage');
@@ -10,7 +10,7 @@ const BLOCK_LEVEL_ELEMENTS = require('./blockLevelElements.js');
 
 const isBlockLevel = selector => BLOCK_LEVEL_ELEMENTS.indexOf(selector) !== -1;
 
-const mapDeclaration = ({ property, value }) => ({ property, value });
+const mapDeclaration = ({ name, value }) => ({ property: name, value });
 
 const getSelectorAndState = ([selector = '', state = null]) => ({
   selector,

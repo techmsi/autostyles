@@ -28,9 +28,8 @@
     "styleguide"
   ],
   "dependencies": {
-    "css": "^2.x",
-    "css-parse": "^2.x",
     "fs-extra": "^8.x",
+    "mensch": "*",
     "mustache": "^4.x",
     "opn": "^6.0.0",
     "prompts": "^2.3.0",
@@ -50,6 +49,7 @@
     "snazzy": "*"
   },
   "jest": {
+    "verbose": true,
     "testEnvironment": "node",
     "modulePaths": [
       "src",
