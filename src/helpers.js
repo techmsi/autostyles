@@ -1,29 +1,36 @@
-const debug = false;
-const bold = require('kleur').bold();
+const debug = true;
+const { bold } = require('kleur');
 
 const log = debug ? console.log.bind(console) : () => {};
 
-// Prints an message & value
-function logMsg(msg, value = {}) {
-  log(`${bold.gray(msg)} - ${bold.blue(JSON.stringify(value, null, 2))}`);
-}
+const logMessage = msg => bold().gray(msg);
+const logValue = value => bold().yellow(value);
+const logKey = key => bold().blue(key.toUpperCase());
+const logObject = value => bold().blue(JSON.stringify(value, null, 2));
+
+const logMsg = (msg, value = {}) =>
+  log(`${logMessage(msg)} - ${logObject(value)}`);
 
 function logConfig(config) {
-  Object.entries(config).map(([key, value]) => {
-    log(`${bold.blue(key.toUpperCase)}: ${bold.yellow(value)}`);
-  });
+  if (typeof config === 'object') {
+    const entries = Object.entries(config);
+
+    entries.map(([key, value]) => {
+      log(`${logKey(key)}: ${logValue(value)}`);
+    });
+  }
 }
 
-// Prints a separator
 function separator(title) {
   const bar = () => '='.repeat(10);
-  log(bold.gray(`${bar}${bold.blue(title)}${bar()}`));
+
+  log([bar(), logValue(title), bar()].join(''));
 }
 
 module.exports = {
-  bold,
   logConfig,
   logMsg,
+  logValue,
   log,
   separator
 };
