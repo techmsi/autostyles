@@ -8,11 +8,11 @@ const CreatePage = require('./CreatePage');
 const { logConfig, logMsg, separator } = require('./helpers.js');
 
 class CreateGuide {
-  constructor({ source, output, debug, templates = 'templates' }) {
-    this.config = { source, output, debug, templates };
-
+  constructor(config) {
     separator('Autostyles Settings');
-    logConfig(this.config);
+    logConfig(config);
+
+    Object.assign(this, { config });
   }
 
   getParsedCss(source) {
@@ -36,7 +36,7 @@ class CreateGuide {
       const { rules } = this.getParsedCss(file).stylesheet;
 
       logMsg('3) Retrieved # of Styles', rules.length);
-      const page = new CreatePage(rules, title, pageIndex);
+      const page = new CreatePage({ rules, title, pageIndex });
 
       return page;
     });

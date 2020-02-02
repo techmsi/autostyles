@@ -31,6 +31,5 @@ module.exports = {
   logConfig,
   logMsg,
   logValue,
-  log,
   separator
 };
