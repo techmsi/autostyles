@@ -2,17 +2,26 @@
 const path = require('path');
 const { readFileSync } = require('fs');
 const css = require('mensch');
-const walk = require('simple-walk');
+const walk = require('directory-tree');
 
 const CreatePage = require('./CreatePage');
 const { logConfig, logMsg, separator } = require('./helpers.js');
+const getFilePaths = ({ children }) =>
+  children.map(({ name, path }, pageIndex) => ({
+    title: name,
+    pagePath: path,
+    pageIndex
+  }));
 
 class CreateGuide {
   constructor(config) {
     separator('Autostyles Settings');
     logConfig(config);
 
-    Object.assign(this, { config });
+    const allCssFiles = walk(config.source, { extensions: /\.css/ }) || [];
+    const cssFiles = getFilePaths(allCssFiles);
+
+    Object.assign(this, { config, cssFiles, menu: cssFiles });
   }
 
   getParsedCss(source) {
@@ -25,15 +34,10 @@ class CreateGuide {
   }
 
   getPages() {
-    const { source } = this.config;
-    const files = walk.match(source, /(\.css)$/gi) || [];
-    const menu = [];
+    const { cssFiles } = this;
 
-    const pages = files.map((file, pageIndex) => {
-      const title = path.basename(file);
-      menu.push({ title, pageIndex });
-
-      const { rules } = this.getParsedCss(file).stylesheet;
+    const pages = cssFiles.map(({ title, pagePath, pageIndex }) => {
+      const { rules } = this.getParsedCss(pagePath).stylesheet;
 
       logMsg('3) Retrieved # of Styles', rules.length);
       const page = new CreatePage({ rules, title, pageIndex });
@@ -41,7 +45,7 @@ class CreateGuide {
       return page;
     });
 
-    return { pages, menu };
+    return { pages, menu: this.menu };
   }
 }
 
