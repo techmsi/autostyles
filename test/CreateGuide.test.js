@@ -13,25 +13,25 @@ let guide = null;
 let createdPages = null;
 let firstRule = null;
 
-describe('#CreateGuide Pages', function() {
+describe('#CreateGuide Pages', function () {
   beforeEach(() => {
     guide = new CreateGuide(defaultConfig);
     createdPages = guide.getPages();
   });
 
-  it(`Gets pages & menu`, function() {
+  it('Gets pages & menu', function () {
     expect(createdPages).toHaveProperty('pages');
     expect(createdPages).toHaveProperty('menu');
   });
 
-  it(`Page is an instance of CreatePage`, function() {
+  it('Page is an instance of CreatePage', function () {
     const [firstPage] = createdPages.pages;
 
     expect(firstPage).toBeInstanceOf(CreatePage);
     expect(firstPage).toHaveProperty('rules');
   });
 
-  it(`Parses css file: ${logValue(sampleCss)} to object`, function() {
+  it(`Parses css file: ${logValue(sampleCss)} to object`, function () {
     guide = new CreateGuide(defaultConfig);
     const parsedCss = guide.getParsedCss(fullSampleCSSFilePath);
 
@@ -40,25 +40,25 @@ describe('#CreateGuide Pages', function() {
   });
 });
 
-describe('#CreateGuide Rules', function() {
+describe('#CreateGuide Rules', function () {
   beforeEach(() => {
     guide = new CreateGuide(defaultConfig);
     createdPages = guide.getPages();
     firstRule = createdPages.pages[0].rules[0];
   });
 
-  it(`Rule contains 'declarations' property`, function() {
+  it('Rule contains \'declarations\' property', function () {
     expect(firstRule).toHaveProperty('declarations');
   });
 
-  it(`Declaration contains ${logValue('property')} property`, function() {
+  it(`Declaration contains ${logValue('property')} property`, function () {
     const [firstDeclaration] = firstRule.declarations;
 
     expect(firstDeclaration.property).toBeDefined();
     expect(firstDeclaration).toHaveProperty('property');
   });
 
-  it(`Declaration contains ${logValue('value')} property`, function() {
+  it(`Declaration contains ${logValue('value')} property`, function () {
     const [firstDeclaration] = firstRule.declarations;
 
     expect(firstDeclaration.value).toBeDefined();

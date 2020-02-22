@@ -1,5 +1,4 @@
 /* Autostyles - Main Module */
-const path = require('path');
 const { readFileSync } = require('fs');
 const css = require('mensch');
 const walk = require('directory-tree');
@@ -14,7 +13,7 @@ const getFilePaths = ({ children }) =>
   }));
 
 class CreateGuide {
-  constructor(config) {
+  constructor (config) {
     separator('Autostyles Settings');
     logConfig(config);
 
@@ -24,7 +23,7 @@ class CreateGuide {
     Object.assign(this, { config, cssFiles, menu: cssFiles });
   }
 
-  getParsedCss(source) {
+  getParsedCss (source) {
     separator(source);
     logMsg('\n1) Get the file from ', source);
     const file = readFileSync(source, 'utf8');
@@ -33,7 +32,7 @@ class CreateGuide {
     return file ? css.parse(file) : '';
   }
 
-  getPages() {
+  getPages () {
     const { cssFiles } = this;
 
     const pages = cssFiles.map(({ title, pagePath, pageIndex }) => {

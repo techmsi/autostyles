@@ -11,7 +11,7 @@ const logObject = value => bold().blue(JSON.stringify(value, null, 2));
 const logMsg = (msg, value = {}) =>
   log(`${logMessage(msg)} - ${logObject(value)}`);
 
-function logConfig(config) {
+function logConfig (config) {
   if (typeof config === 'object') {
     const entries = Object.entries(config);
 
@@ -21,7 +21,7 @@ function logConfig(config) {
   }
 }
 
-function separator(title) {
+function separator (title) {
   const bar = () => '='.repeat(10);
 
   log([bar(), logValue(title), bar()].join(''));

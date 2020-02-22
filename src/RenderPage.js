@@ -5,7 +5,8 @@ const path = require('path');
 const mustache = require('mustache');
 const { logMsg } = require('./helpers.js');
 
-const commonScript = `<script type="text/javascript" src="css/autostyles.js"></script>`;
+const commonScript =
+  '<script type="text/javascript" src="css/autostyles.js"></script>';
 const commonHeadTemplate = `
   <meta charset="UTF-8">
   <title>Automatic Style Guide {{#title}}- {{title}} {{/title}}</title>
@@ -18,7 +19,7 @@ const commonHeadTemplate = `
 `;
 
 class RenderPage {
-  constructor({ config, page }) {
+  constructor ({ config, page }) {
     this.pageTemplate = path.join(config.templates, 'page.html');
     this.startPageTemplate = path.join(config.templates, 'index.html');
 
@@ -30,7 +31,7 @@ class RenderPage {
     Object.assign(this, { config, page });
   }
 
-  writePageFile(filename, content) {
+  writePageFile (filename, content) {
     outputFile(filename, content, err => {
       if (err) {
         console.log('Error: ', err);
@@ -41,26 +42,26 @@ class RenderPage {
     logMsg('5) Write File', filename);
   }
 
-  getTemplate(templateFilename) {
+  getTemplate (templateFilename) {
     const templateFile = readFileSync(`${__dirname}/${templateFilename}`);
     logMsg('4b) Get Template File', templateFilename);
 
     return templateFile.toString('utf-8');
   }
 
-  render() {
+  render () {
     const { templates, output } = this.config;
-    const { pageNumber = '', rules, menu = null } = this.page;
+    const { pageIndex = '', menu = null } = this.page;
     const { pageTemplate, startPageTemplate, pageParts } = this;
 
-    const data = menu ? menu : rules;
+    const data = this.page;
     const chosenTemplate = menu ? startPageTemplate : pageTemplate;
 
     const ext = path.extname(chosenTemplate);
 
     const file = chosenTemplate
       .replace(templates, output)
-      .replace(ext, `${pageNumber}.html`);
+      .replace(ext, `${pageIndex}.html`);
 
     const rendered = mustache.render(
       this.getTemplate(chosenTemplate),
@@ -71,7 +72,7 @@ class RenderPage {
     this.writePageFile(file, rendered);
     logMsg('6) Output the rendered file ', file);
 
-    return file;
+    return { file };
   }
 }
 

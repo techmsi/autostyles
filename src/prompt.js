@@ -21,6 +21,6 @@ const getConfigMenu = [
   }
 ];
 
-const getConfigurationFields = async () => await prompt(getConfigMenu);
+const getConfigurationFields = async () => prompt(getConfigMenu);
 
 module.exports = getConfigurationFields;

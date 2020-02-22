@@ -8,14 +8,14 @@ const getSelectorAndState = ([selector = '', state = null]) => ({
 });
 
 class CreatePage {
-  constructor(page) {
+  constructor (page) {
     Object.assign(this, {
       ...page,
       rules: this.mapRules(page.rules)
     });
   }
 
-  mapRules(rules) {
+  mapRules (rules) {
     return rules.map(({ selectors, declarations }, ruleIndex) => ({
       closed: ruleIndex === 0,
       blockLevel: isBlockLevel(selectors.toString()),

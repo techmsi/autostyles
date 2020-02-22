@@ -9,23 +9,23 @@ const StyleGuide = require('../src/StyleGuide');
 
 let guide = null;
 
-describe('#StyleGuide', function() {
-  it('Sets the config for new StyleGuide', function() {
+describe('#StyleGuide', function () {
+  it('Sets the config for new StyleGuide', function () {
     guide = new StyleGuide(defaultConfig);
 
     expect(guide).toBeDefined();
     expect(guide).toHaveProperty('config');
   });
-  it('Creates new StyleGuide object', function() {
+  it('Creates new StyleGuide object', function () {
     guide = new StyleGuide(defaultConfig);
     const createdGuide = guide.create();
 
     expect(typeof createdGuide).toBe('object');
   });
 
-  it('Renders a guide directory with associated files', function() {
+  it('Renders a guide directory with associated files', function () {
     guide = new StyleGuide(defaultConfig);
-    const createdGuide = guide.create();
+    guide.create();
     guide.render();
 
     chai.assert.pathExists(defaultConfig.output);

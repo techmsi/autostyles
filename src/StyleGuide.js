@@ -2,35 +2,32 @@ const { removeSync } = require('fs-extra');
 
 const CreateGuide = require('./CreateGuide');
 const RenderGuide = require('./RenderGuide');
-const { logMsg } = require('./helpers.js');
-
-let startPage = '';
 
 class StyleGuide {
-  constructor(config) {
+  constructor (config) {
     this.config = {
       ...config,
       templates: 'templates'
     };
   }
 
-  create() {
+  create () {
     this.Guide = new CreateGuide(this.config);
 
     return this.Guide;
   }
 
-  clean(folderToRemove) {
+  clean (folderToRemove) {
     removeSync(folderToRemove);
   }
 
-  render() {
+  render () {
     this.clean(this.config.output);
 
     const { pages, menu } = this.Guide.getPages();
     this.RenderGuide = new RenderGuide({ config: this.config, pages, menu });
 
-    startPage = this.RenderGuide.renderStartPage();
+    this.RenderGuide.renderStartPage();
     this.RenderGuide.render();
   }
 }

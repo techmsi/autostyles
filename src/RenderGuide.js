@@ -6,7 +6,7 @@ const { logMsg } = require('./helpers.js');
 const RenderPage = require('./RenderPage');
 
 class RenderGuide {
-  constructor({ config, pages, menu }) {
+  constructor ({ config, pages, menu }) {
     const appFolder = path.resolve(__dirname, 'app');
 
     this.folders = {
@@ -17,14 +17,14 @@ class RenderGuide {
     Object.assign(this, { config, pages, menu });
   }
 
-  renderStartPage() {
+  renderStartPage () {
     logMsg(`4a) Create index page with ${this.menu.length} links `, this.menu);
     this.startPage = this.renderPage({ menu: this.menu });
 
     return this.startPage;
   }
 
-  copyFiles() {
+  copyFiles () {
     const { appFolder, stylesFolder } = this.folders;
     const { source, output } = this.config;
 
@@ -35,7 +35,7 @@ class RenderGuide {
     logMsg('5) Copy Files to ', output);
   }
 
-  renderPage(page) {
+  renderPage (page) {
     logMsg('4) Create html page for ', page.title);
 
     const renderedPage = new RenderPage({
@@ -47,7 +47,7 @@ class RenderGuide {
     return file;
   }
 
-  render() {
+  render () {
     this.copyFiles();
     this.pages.forEach(page => {
       this.renderPage(page);
