@@ -1,12 +1,13 @@
 const debug = true;
-const { bold } = require('kleur');
+const { grey, green, blue, yellow } = require('tiny-chalk');
 
 const log = debug ? console.log.bind(console) : () => {};
 
-const logMessage = msg => bold().gray(msg);
-const logValue = value => bold().yellow(value);
-const logKey = key => bold().blue(key.toUpperCase());
-const logObject = value => bold().blue(JSON.stringify(value, null, 2));
+const logMessage = msg => grey(msg);
+const logPrompt = value => green(value);
+const logValue = value => yellow(value);
+const logKey = key => blue(key.toUpperCase());
+const logObject = value => blue(JSON.stringify(value, null, 2));
 
 const logMsg = (msg, value = {}) =>
   log(`${logMessage(msg)} - ${logObject(value)}`);
@@ -30,6 +31,8 @@ function separator (title) {
 module.exports = {
   logConfig,
   logMsg,
+  logPrompt,
+  logMessage,
   logValue,
   separator
 };

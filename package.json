@@ -43,10 +43,10 @@
     "directory-tree": "^2.2.4",
     "esm": "*",
     "fs-extra": "^8.x",
-    "kleur": "^3.x",
     "mensch": "*",
     "mustache": "^4.x",
-    "prompts": "*"
+    "prompts": "^2.x",
+    "tiny-chalk": "*"
   },
   "devDependencies": {
     "chai": "*",
