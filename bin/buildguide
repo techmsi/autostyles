@@ -1,0 +1,4 @@
+#!/usr/bin/env node
+require = require('esm')(module);
+const setup = require('../src/index');
+setup();

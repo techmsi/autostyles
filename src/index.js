@@ -1,7 +1,7 @@
 /* Autostyles - Main Module */
-const prompt = require('./src/prompt');
-const StyleGuide = require('./src/StyleGuide');
-const { logMsg } = require('./src/helpers.js');
+const prompt = require('./prompt');
+const StyleGuide = require('./StyleGuide');
+const { logMsg } = require('./helpers.js');
 
 module.exports = async () => {
   const config = await prompt();

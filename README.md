@@ -15,9 +15,8 @@ npm install --save-dev autostyles
 - add these lines to your package.json
 
 ```json
-"localModulesPath": "./node_modules/.bin",
 "scripts": {
-  "styleguide": "$npm_package_localModulesPath/buildguide",
+  "styleguide": "buildguide",
 }
 ```
 

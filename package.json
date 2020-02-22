@@ -3,6 +3,18 @@
   "version": "1.1.5",
   "description": "Transforms css into automatic style guides.",
   "license": "MIT",
+  "bin": {
+    "buildguide": "./bin/buildguide"
+  },
+  "files": [
+    "bin/",
+    "src/"
+  ],
+  "main": "src/index.js",
+  "module": "./src/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "https://techmsi@github.com/techmsi/autostyles.git"
@@ -14,14 +26,14 @@
   "scripts": {
     "pretest:ci": "echo 'PRETEST' && greenkeeper-lockfile-update",
     "posttest:ci": "echo 'POSTTEST' && greenkeeper-lockfile-upload",
+    "precz": "npm run format && npm test",
     "cz": "git-cz",
+    "format": "semistandard --fix",
     "lint": "semistandard --verbose | snazzy || echo 'Please fix the linting errors.'",
+    "module-size": "du -sh ./node_modules/* | sort -nr | grep M",
     "test": "jest --coverage",
     "test:ci": "jest --coverage --ci --runInBand",
     "coverage": "cat ./coverage/lcov.info | coveralls"
-  },
-  "bin": {
-    "buildguide": "lib/index.js"
   },
   "keywords": [
     "css",
@@ -29,6 +41,7 @@
   ],
   "dependencies": {
     "directory-tree": "^2.2.4",
+    "esm": "*",
     "fs-extra": "^8.x",
     "kleur": "^3.x",
     "mensch": "*",
@@ -48,25 +61,9 @@
     "semistandard": "*",
     "snazzy": "*"
   },
-  "jest": {
-    "verbose": true,
-    "testTimeout": 50000,
-    "testEnvironment": "node",
-    "modulePaths": [
-      "src",
-      "/node_modules/"
-    ],
-    "reporters": [
-      "default",
-      [
-        "jest-junit",
-        {
-          "outputDirectory": "coverage/junit"
-        }
-      ]
-    ],
-    "collectCoverageFrom": [
-      "src/**/{!(autostyles),}.js"
+  "semistandard": {
+    "env": [
+      "jest"
     ]
   },
   "config": {
