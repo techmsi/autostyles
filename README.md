@@ -40,7 +40,7 @@ npm install autostyles -g
 buildguide
 ```
 
-You will be prompted for the source & desitnation folders. This information will be used to generate your style guide.
+You will be prompted for the source & destination folders. This information will be used to generate your style guide.
 
 - ✔ Turn debug on to get log info? **yes**
 - ✔ Source folder **./my-css** `Source folder containing css files`

@@ -14,8 +14,8 @@ function accordian (e) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-  var i;
-  var titles = document.querySelectorAll('.autostyles-block-title');
+  let i;
+  const titles = document.querySelectorAll('.autostyles-block-title');
 
   for (i = 0; i < titles.length; i++) {
     titles[i].addEventListener('click', accordian, false);

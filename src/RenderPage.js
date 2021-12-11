@@ -32,7 +32,7 @@ class RenderPage {
   }
 
   writePageFile (filename, content) {
-    outputFile(filename, content, err => {
+    outputFile(filename, content, (err) => {
       if (err) {
         console.log('Error: ', err);
         process.exit(1);
@@ -43,7 +43,8 @@ class RenderPage {
   }
 
   getTemplate (templateFilename) {
-    const templateFile = readFileSync(`${__dirname}/${templateFilename}`);
+    const path = require('path');
+    const templateFile = readFileSync(path.join(__dirname, templateFilename));
     logMsg('4b) Get Template File', templateFilename);
 
     return templateFile.toString('utf-8');
